@@ -8,7 +8,7 @@ import java.util.List;
  * Date: 3/28/12
  */
 public class Traversal {
-    private void inOrder(BinaryNode node, List<Integer> out) {
+    public void inOrder(BinaryNode node, List<Integer> out) {
         if(node.l != null) {
             inOrder(node.l, out);
         }
@@ -19,7 +19,7 @@ public class Traversal {
         }
     }
 
-    private void preOrder(BinaryNode node, List<Integer> out) {
+    public void preOrder(BinaryNode node, List<Integer> out) {
         System.out.println(node.i);
         out.add(node.i);
         if(node.l != null) {
@@ -30,7 +30,7 @@ public class Traversal {
         }
     }
 
-    private void postOrder(BinaryNode node, List<Integer> out) {
+    public void postOrder(BinaryNode node, List<Integer> out) {
         if(node.l != null) {
             postOrder(node.l, out);
         }
@@ -41,34 +41,5 @@ public class Traversal {
         out.add(node.i);
     }
 
-    public static void main(String[] args) {
-        /*
-                    5
-                3        7
-            2    4    6   8
-         */
-        BinaryNode root = BinaryNode.
-                                c(5).
-                                    l(3).
-                                        l(2).p.r(4).p.
-                                p.
-                                    r(7).
-                                        l(6).p.r(8).p.
-                                p;
-
-        Traversal traversal = new Traversal();
-
-        System.out.println("Pre Order");
-        List<Integer> out = new ArrayList<Integer>();
-        traversal.preOrder(root, out);
-
-        System.out.println("In Order");
-        out = new ArrayList<Integer>();
-        traversal.inOrder(root, out);
-
-        System.out.println("Post Order");
-        out = new ArrayList<Integer>();
-        traversal.postOrder(root, out);
-    }
 
 }
