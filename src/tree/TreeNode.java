@@ -19,12 +19,6 @@ public class TreeNode {
         return n;
     }
 
-    public TreeNode child(String s) {
-        TreeNode c = create(s);
-        children.add(c);
-        return c;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -7,11 +7,8 @@ import java.util.Queue;
 import java.util.Stack;
 
 /**
- * Created by IntelliJ IDEA.
  * User: absharma
  * Date: 3/28/12
- * Time: 7:43 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Tree {
     private TreeNode translate(String s) {
