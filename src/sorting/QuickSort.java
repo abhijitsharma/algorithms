@@ -2,39 +2,78 @@ package sorting;
 
 import utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * User: absharma
  * Date: 3/28/12
  */
 public class QuickSort {
     public static void main(String[] args) {
-        QuickSort qs = new QuickSort();
-
+        testAll();
     }
 
     private static void testAll() {
-        
+        test(null, new ArrayList<Integer>());
+        test(null, null);
+        test(Arrays.asList(1), Arrays.asList(1));
+        test(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        test(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
+        test(Arrays.asList(1,2,3,4,5), Arrays.asList(1,2,3,4,5));
+        test(Arrays.asList(5,4,3,2,1), Arrays.asList(1,2,3,4,5));
     }
 
-    private static void test(int[] is, int[] expected) {
+    private static void test(List<Integer> is, List<Integer> expected) {
         QuickSort qs = new QuickSort();
-        int[] rs = qs.recursiveSort(is);
-        Utils.printIntArray(rs);
-        Utils.printIntArray(expected);
-        if(!Utils.intArrayEquals(rs, expected)) {
-            throw new RuntimeException("Arrays not equal");
+        List<Integer> rs = qs.recursiveSort(is);
+        Utils.printList(rs);
+        Utils.printList(expected);
+        if (!Utils.listEquals(rs, expected)) {
+            throw new RuntimeException("Lists not equal");
         }
     }
 
-    public int[] recursiveSort(int[] is) {
-        if(is == null || is.length == 0) {
-            
+    /** Other ways of choosing pivot
+     *      - take (first + last)/2 or to prevent overflows first + (last - first)/2
+     *      - random choice
+     * @param is list of integers to be sorted
+     * @return list of sorted integers
+     */
+    public List<Integer> recursiveSort(List<Integer> is) {
+        if (is == null || is.size() == 0 || is.size() == 1) { // array of 0/1 elements is sorted
+            return is;
         }
-
-        return
-    }
-
-    private int[] merge(int[] a, int[] b , int[] c) {
         
+        int pivot = is.get(is.size() - 1); // last element is the pivot
+        List<Integer> less = new ArrayList<Integer>();
+        List<Integer> more = new ArrayList<Integer>();
+
+        for (int i = 0; i < is.size() - 1; i++) { // exclude the pivot i.e. the last element
+            int value = is.get(i);
+            if (value < pivot) {
+                less.add(value);
+            } else {
+                more.add(value);
+            }
+        }
+        return merge(recursiveSort(less), pivot, recursiveSort(more));
+    }
+
+    private List<Integer> merge(List<Integer> a, int b, List<Integer> c) {
+        List<Integer> result = new ArrayList<Integer>();
+        if (a != null) {
+            for (int i : a) {
+                result.add(i);
+            }
+        }
+        result.add(b);
+        if (c != null) {
+            for (int i : c) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 }

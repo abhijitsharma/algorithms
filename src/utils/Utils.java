@@ -1,38 +1,29 @@
 package utils;
 
+import java.util.List;
+
 /**
  * User: absharma
  * Date: 3/28/12
  */
 public final class Utils {
 
-    public static boolean intArrayEquals(int[] is, int[] js) {
+    public static boolean listEquals(List is, List js) {
         if(is == null && js == null) {
             return true;
         } else if(is == null) {
-            return false;
+            return js.size() == 0;
         } else if(js == null) {
-            return false;
+            return is.size() == 0;
         }
-
-        if(is.length != js.length) {
-            return false;
-        }
-        int size = is.length;
-        for (int i = 0; i < size; i++) {
-            if(is[i] != js[i]) {
-                return false;
-            }
-        }
-        return true;
+        return is.equals(js);
     }
 
-    public static void printIntArray(int[] is) {
+    public static void printList(List is) {
         System.out.print("[");
         if(is != null) {
-            int size = is.length;
-            for (int i = 0; i < size; i++) {
-                System.out.print(i + ", ");
+            for (Object o : is) {
+                System.out.print(o + ", ");
             }
         }
         System.out.println("]");
