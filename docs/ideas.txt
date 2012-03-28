@@ -1,3 +1,6 @@
 * Calculate derivative of a polynomial function
-    - 5 * x ^ 2 + 3 * x + 6
+    - 5 * x ^ 2 + 3 * x + 6 (Should this be represented as a expression tree)
 * Link list reverse
+* Combine Like terms in arithmetic expression
+* Euler traversal - Tree
+* Hamiltonian traversal - Graph
