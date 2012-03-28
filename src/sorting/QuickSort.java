@@ -55,23 +55,42 @@ public class QuickSort {
         return result;
     }
 
+    public List<Integer> iterativeSort(List<Integer> is) {
+        return null;
+    }
+
     public static void main(String[] args) {
         testAll();
     }
 
     private static void testAll() {
-        test(null, new ArrayList<Integer>());
-        test(null, null);
-        test(Arrays.asList(1), Arrays.asList(1));
-        test(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-        test(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
-        test(Arrays.asList(1,2,3,4,5), Arrays.asList(1,2,3,4,5));
-        test(Arrays.asList(5,4,3,2,1), Arrays.asList(1,2,3,4,5));
+        testBoth(null, new ArrayList<Integer>());
+        testBoth(null, null);
+        testBoth(Arrays.asList(1), Arrays.asList(1));
+        testBoth(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        testBoth(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
+        testBoth(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(1, 2, 3, 4, 5));
+        testBoth(Arrays.asList(5, 4, 3, 2, 1), Arrays.asList(1, 2, 3, 4, 5));
     }
 
-    private static void test(List<Integer> is, List<Integer> expected) {
+    private static void testBoth(List<Integer> is, List<Integer> expected) {
+        testRecursive(is, expected);
+        testIterative(is, expected);
+    }
+
+    private static void testRecursive(List<Integer> is, List<Integer> expected) {
         QuickSort qs = new QuickSort();
         List<Integer> rs = qs.recursiveSort(is);
+        Utils.printList(rs);
+        Utils.printList(expected);
+        if (!Utils.listEquals(rs, expected)) {
+            throw new RuntimeException("Lists not equal");
+        }
+    }
+
+    private static void testIterative(List<Integer> is, List<Integer> expected) {
+        QuickSort qs = new QuickSort();
+        List<Integer> rs = qs.iterativeSort(is);
         Utils.printList(rs);
         Utils.printList(expected);
         if (!Utils.listEquals(rs, expected)) {
