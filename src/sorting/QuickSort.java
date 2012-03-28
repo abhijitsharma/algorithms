@@ -11,29 +11,6 @@ import java.util.List;
  * Date: 3/28/12
  */
 public class QuickSort {
-    public static void main(String[] args) {
-        testAll();
-    }
-
-    private static void testAll() {
-        test(null, new ArrayList<Integer>());
-        test(null, null);
-        test(Arrays.asList(1), Arrays.asList(1));
-        test(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-        test(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
-        test(Arrays.asList(1,2,3,4,5), Arrays.asList(1,2,3,4,5));
-        test(Arrays.asList(5,4,3,2,1), Arrays.asList(1,2,3,4,5));
-    }
-
-    private static void test(List<Integer> is, List<Integer> expected) {
-        QuickSort qs = new QuickSort();
-        List<Integer> rs = qs.recursiveSort(is);
-        Utils.printList(rs);
-        Utils.printList(expected);
-        if (!Utils.listEquals(rs, expected)) {
-            throw new RuntimeException("Lists not equal");
-        }
-    }
 
     /** Other ways of choosing pivot
      *      - take (first + last)/2 or to prevent overflows first + (last - first)/2
@@ -76,5 +53,29 @@ public class QuickSort {
             }
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        testAll();
+    }
+
+    private static void testAll() {
+        test(null, new ArrayList<Integer>());
+        test(null, null);
+        test(Arrays.asList(1), Arrays.asList(1));
+        test(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        test(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
+        test(Arrays.asList(1,2,3,4,5), Arrays.asList(1,2,3,4,5));
+        test(Arrays.asList(5,4,3,2,1), Arrays.asList(1,2,3,4,5));
+    }
+
+    private static void test(List<Integer> is, List<Integer> expected) {
+        QuickSort qs = new QuickSort();
+        List<Integer> rs = qs.recursiveSort(is);
+        Utils.printList(rs);
+        Utils.printList(expected);
+        if (!Utils.listEquals(rs, expected)) {
+            throw new RuntimeException("Lists not equal");
+        }
     }
 }
