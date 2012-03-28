@@ -52,12 +52,13 @@ public class QuickSort {
 
         for (int i = 0; i < is.size() - 1; i++) { // exclude the pivot i.e. the last element
             int value = is.get(i);
-            if (value < pivot) {
+            if (value < pivot) { // split into arrays that are less and more than pivot
                 less.add(value);
             } else {
                 more.add(value);
             }
         }
+        // sort the less and more arrays recursively and merge less, pivot and right
         return merge(recursiveSort(less), pivot, recursiveSort(more));
     }
 
