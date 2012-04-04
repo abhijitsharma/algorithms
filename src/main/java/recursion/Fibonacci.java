@@ -32,4 +32,26 @@ public class Fibonacci {
             return i;
         }
     }
+
+    public long fibIterativeRecursive(int n) {
+        return _fibIterativeRecursive(1, 0, n);
+    }
+
+    private long _fibIterativeRecursive(int lst, int secLst, int n) {
+        if (n == 0) {
+            return secLst;
+        }
+        return _fibIterativeRecursive((lst + secLst), lst, --n);
+    }
+
+    public long fibIterative(int n) {
+        int secLst = 0;
+        int lst = 1;
+        for (int i = 1; i <= n;i++) {
+            int tmp = lst + secLst;
+            secLst = lst;
+            lst = tmp;
+        }
+        return secLst;
+    }
 }

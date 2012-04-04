@@ -1,6 +1,5 @@
 package recursion;
 
-import misc.Parenthesis;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,6 +29,20 @@ public class TestFibonacci {
     private static void testAll(int n, long e) {
         testRecursive(n, e);
         testRecursiveMemoize(n, e);
+        testIterativeRecursive(n, e);
+        testIterative(n, e);
+    }
+
+    private static void testIterative(int n, long e) {
+        Fibonacci fib = new Fibonacci();
+        long r = fib.fibIterative(n);
+        Assert.assertEquals(e, r);
+    }
+
+    private static void testIterativeRecursive(int n, long e) {
+        Fibonacci fib = new Fibonacci();
+        long r = fib.fibIterativeRecursive(n);
+        Assert.assertEquals(e, r);
     }
 
     private static void testRecursive(int n, long e) {

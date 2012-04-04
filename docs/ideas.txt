@@ -1,6 +1,21 @@
 * Calculate derivative of a polynomial function
     - 5 * x ^ 2 + 3 * x + 6 (Should this be represented as a expression tree)
 * Link list reverse
-* Combine Like terms in arithmetic expression
-* Euler traversal - Tree
-* Hamiltonian traversal - Graph
+* Arithmetic expression
+    - Evaluate
+    - Parse
+    - Simplify * 1, * 0
+    - Combine Like terms in arithmetic expression
+    - Division
+* Tree
+    - Euler traversal
+    - level order (2 ways)
+* BST
+    - height
+    - mirror
+    - get k-largest
+    - find if it is indeed a BST
+    - search
+* Graph
+    - Hamiltonian traversal - Graph
+* Knuth's Dancing Links - Sudoko, Pentonimo - see Hadoop code for a MR impl.
