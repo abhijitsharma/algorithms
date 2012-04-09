@@ -34,15 +34,15 @@ public class Factorial {
     }
 
     private long _factorialIterativeRecursive(int ctr, long p, int max) {
-        if (max > ctr) {
+        if (ctr > max) {
             return p;
         }
-        return _factorialIterativeRecursive(++ctr, p * ctr, max);
+        return _factorialIterativeRecursive(ctr + 1, p * ctr, max);
     }
 
     public long factorialIterative(int n) {
         long p = 1;
-        for (int ctr = 1; ctr < n; ctr++) {
+        for (int ctr = 1; ctr <= n; ctr++) {
             p = p * ctr;
         }
         return p;
