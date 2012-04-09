@@ -23,6 +23,10 @@ public class TestCoinChange {
         denominations = new int[] {40, 25, 20, 1};
         num = c.dynamicProgramming(48, denominations);
         System.out.println("num = " + num);
+
+        denominations = new int[] {10, 5, 4, 1};
+        num = c.dynamicProgramming(8, denominations);
+        System.out.println("num = " + num);
     }
 
     @Test

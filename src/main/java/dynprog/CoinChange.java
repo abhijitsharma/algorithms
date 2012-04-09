@@ -36,6 +36,9 @@ public class CoinChange {
         int[] out = new int[amt + 1];
         int num = _dynamicProgramming(amt, denominations, out);
         Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        for (int j = 0; j < denominations.length; j++) {
+            map.put(denominations[j], 0); // initialize the map
+        }
         getDenominationsArray(out, amt, map);
         int[] arr = new int[denominations.length];
         int i = denominations.length - 1;
@@ -49,13 +52,12 @@ public class CoinChange {
         return num;
     }
 
+    /**
+     * Get the list of denominations definitely included in an amount recursively using the out array
+     */
     private void getDenominationsArray(int[] out, int amt, Map<Integer, Integer> map) {
         if(amt > 0) {
-            int cnt = 1;
-            if(map.containsKey(out[amt])) {
-                cnt = map.get(out[amt]) + 1;
-            }
-            map.put(out[amt], cnt);
+            map.put(out[amt], map.get(out[amt]) + 1);
             getDenominationsArray(out, amt - out[amt], map);
         }
     }
@@ -70,7 +72,7 @@ c[3] = 1 + min {c[3 - 2], c[3 - 1]} = 1 + min {c[1], c[2]} = 1 + 1 = 2
 c[4] = 1 + min {c[4 - 2], c[4 - 1]} = 1 + min {c[2], c[3]} = 1 + 1 = 2
 c[5] = 1 + min {c[5 - 2], c[5 - 1]} = 1 + min {c[3], c[4]} = 1 + 2 = 3
 
- also store the coin denomination definitely used in a solution
+ also store the coin denomination definitely used in a solution - contained in out array
  */
 
     public int _dynamicProgramming(int amt, int[] denominations, int[] out) {
