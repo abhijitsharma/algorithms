@@ -10,6 +10,31 @@ import org.junit.Test;
 public class TestCoinChange {
 
     @Test
+    public void testCountWays() {
+        CoinChange c = new CoinChange();
+        int[] denominations = new int[] {2, 1};
+        int num = c.countWays(6, denominations, 0);
+        Assert.assertEquals(4, num);
+        System.out.println("num = " + num);
+
+        denominations = new int[] {10, 5, 1};
+        num = c.countWays(16, denominations, 0);
+        Assert.assertEquals(6, num);
+        System.out.println("num = " + num);
+
+        denominations = new int[] {50, 25, 10, 5, 1};
+        num = c.countWays(100, denominations, 0);
+        Assert.assertEquals(292, num);
+        System.out.println("num = " + num);
+
+
+        denominations = new int[] {25, 10, 5, 1};
+        num = c.countWays(67, denominations, 0);
+        Assert.assertEquals(87, num);
+        System.out.println("num = " + num);
+    }
+
+    @Test
     public void testDynamicProgramming() {
         CoinChange c = new CoinChange();
         int[] denominations = new int[] {2, 1};

@@ -1,6 +1,5 @@
 package dynprog;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -30,7 +29,25 @@ public class CoinChange {
         _greedy(remainder, denominations, ++index, out);
     }
 
-    //todo less recursive
+    /*
+    Count the number of ways in which change of amt can be made using denominations.
+    # of ways in which amt can be made w/o using coin of denomination d +
+    # of ways in which amt - d can be made using coins of all denomination
+
+    The base cases
+    amt = 0 - 1 way
+    in index runs over the denominations array or if amt is negative return 0
+     */
+    public int countWays(int amt, int[] denominations, int index) {
+        if(amt == 0) {
+            return 1;
+        } else if(amt < 0 || index == denominations.length){
+            return 0;
+        } else {
+            return countWays(amt, denominations, index + 1) +
+                    countWays(amt - denominations[index], denominations, index);
+        }
+    }
 
     public int dynamicProgramming(int amt, int[] denominations) {
         int[] out = new int[amt + 1];
