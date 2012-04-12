@@ -52,6 +52,18 @@ public class TestCoinChange {
         denominations = new int[] {10, 5, 4, 1};
         num = c.dynamicProgramming(8, denominations);
         System.out.println("num = " + num);
+
+        denominations = new int[] {30, 20};
+        num = c.dynamicProgramming(70, denominations);
+        System.out.println("num = " + num);
+
+        try {
+            denominations = new int[] {30, 20};
+            num = c.dynamicProgramming(69, denominations);
+        } catch (Exception e) {
+            System.out.println("Expected error : " + e);
+        }
+        System.out.println("num = " + num);
     }
 
     @Test
@@ -98,6 +110,12 @@ public class TestCoinChange {
         out = c.greedy(67, denominations);
         printAndAssert(67, denominations, out, new int[] {2, 1, 0, 1, 0, 2});
 
+        /* Fails - as we dont have back tracking
+        todo greedy with backtracking
+        denominations = new int[] {30, 20};
+        out = c.greedy(70, denominations);
+        printAndAssert(70, denominations, out, new int[] {1, 2});
+        */
         /**
          * Not optimal by greedy approach
          */

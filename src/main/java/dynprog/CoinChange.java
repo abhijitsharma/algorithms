@@ -101,15 +101,25 @@ c[5] = 1 + min {c[5 - 2], c[5 - 1]} = 1 + min {c[3], c[4]} = 1 + 2 = 3
             for (int i = 0; i < denominations.length; i++) {
                 int index = j - denominations[i];
                 if (index >= 0) {
-                    if (min > counts[index]) {
+                    // find the min of c[j - denominations[i]]
+                    // if the counts you are considering are -1 ie. no solution then ignore
+                    if (min > counts[index] && counts[index] != -1) {
                         min = counts[index];
                         used = denominations[i];
                     }
                 }
             }
-            counts[j] = 1 + min;
-            out[j] = used;
+            if(min == Integer.MAX_VALUE) { // If no solution was found then set -1
+                counts[j] = -1;
+                out[j] = -1;
+            } else {
+                counts[j] = 1 + min;
+                out[j] = used;
+            }
 //            System.out.println(j + " = " + counts[j]);
+        }
+        if(counts[amt] == -1) {
+            throw new RuntimeException("No solution for " + amt);
         }
         return counts[amt];
     }
