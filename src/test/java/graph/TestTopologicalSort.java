@@ -1,5 +1,6 @@
 package graph;
 
+import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class TestTopologicalSort {
                 "2\n" +
                 "4 1 2\n" +
                 "5 4";
-        processSpec(s);
+
+        processSpec(s, "1 2 3 4 5");
 
         s = "9\n" +
                 "5\n" +
@@ -25,7 +27,7 @@ public class TestTopologicalSort {
                 "3 2 7 \n" +
                 "8 7\n" +
                 "9 8 3";
-        processSpec(s);
+        processSpec(s, "1 4 6 7 2 8 5 3 9");
 
         s = "11\n" +
                 "5\n" +
@@ -34,14 +36,14 @@ public class TestTopologicalSort {
                 "9 8 11\n" +
                 "2 11\n" +
                 "10 3 11\n";
-        processSpec(s);
+        processSpec(s, "1 3 4 5 6 7 11 8 2 10 9");
 
         s = "3\n" +
                 "2\n" +
                 "1 2 3\n" +
                 "3 1\n";
         try {
-            processSpec(s);
+            processSpec(s, "");
         } catch (Exception e) {
             System.out.println("Expected error : " + e.getMessage());
         }
@@ -51,23 +53,23 @@ public class TestTopologicalSort {
                 "1 2\n" +
                 "2 1\n";
         try {
-            processSpec(s);
+            processSpec(s, "");
         } catch (Exception e) {
             System.out.println("Expected error : " + e.getMessage());
         }
 
     }
 
-    private void processSpec(String s) {
+    private void processSpec(String s, String expected) {
         TopologicalSort sort = new TopologicalSort();
         Graph graph = sort.createGraph(s);
-//        System.out.println("graph = " + graph);
-
+        StringBuilder sb = new StringBuilder();
         List<Vertex> list = sort.sort(graph);
         for (Vertex v : list) {
-            System.out.print(v.getLabel() + " ");
+            sb.append(v.getLabel() + " ");
         }
-        System.out.println();
+        Assert.assertEquals(expected, sb.toString().trim());
+        System.out.println(sb.toString());
     }
 
 }

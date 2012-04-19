@@ -1,6 +1,8 @@
 package utils;
 
+import java.io.BufferedInputStream;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * User: absharma
@@ -28,5 +30,25 @@ public final class Utils {
         }
         System.out.println("]");
     }
+
+    public static String processInput() {
+        Scanner scanner = new Scanner(new BufferedInputStream(System.in));
+        StringBuilder sb = new StringBuilder();
+        try {
+            scanner.useDelimiter("\n");
+            String line;
+            while(scanner.hasNext()) {
+                line = scanner.nextLine();
+                if(line.trim().length() == 0)
+                    break;
+                sb.append(line).append("\n");
+            }
+        } finally {
+            scanner.close();
+        }
+        return sb.toString();
+    }
+
+
     
 }

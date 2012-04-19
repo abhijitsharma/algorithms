@@ -1,9 +1,9 @@
 package graph;
 
-import java.io.BufferedInputStream;
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * User: absharma
@@ -16,24 +16,24 @@ public class TopologicalSort {
 
         List<Vertex> list = new ArrayList<Vertex>();
         for (Vertex v : graph.getVertices()) {
-            if (v.getIn().size() == 0) {
+            if (v.getIn().size() == 0) { // add vertices with no incoming edges to exploration lists
                 list.add(v);
             }
         }
 
         while (!list.isEmpty()) {
-            Vertex v = list.remove(0);// remove an element
+            Vertex v = list.remove(0);// remove an element as all dependencies of this v is resolved
             result.add(v); // add to result
             for (Edge out : v.getOut()) { // consider all outgoing edges
                 Vertex sink = out.getSink();
-                sink.removeIn(out); // remove this edge for incoming edges
-                graph.removeEdge(out);
+                sink.removeIn(out); // remove this edge from v's incoming edges
+                graph.removeEdge(out); // remove edge from graph
                 if (sink.getIn().size() == 0) { // if vertex now has no incoming add to exploration list
                     list.add(sink);
                 }
             }
         }
-        if (graph.getEdges().size() != 0) {
+        if (graph.getEdges().size() != 0) { // all edges should have been removed
             throw new IllegalStateException("There is a cycle ...");
         }
         System.out.println();
@@ -41,32 +41,12 @@ public class TopologicalSort {
     }
 
     public static void main(String[] args) {
-        String s = processInput();
         TopologicalSort sort = new TopologicalSort();
-        List<Vertex> list = sort.sort(sort.createGraph(s));
+        List<Vertex> list = sort.sort(sort.createGraph(Utils.processInput()));
         for (Vertex v : list) {
             System.out.print(v.getLabel() + " ");
         }
         System.out.println();
-    }
-
-    private static String processInput() {
-        Scanner scanner = new Scanner(new BufferedInputStream(System.in));
-        StringBuilder sb = new StringBuilder();
-        try {
-            scanner.useDelimiter("\n");
-
-            String line;
-            while(scanner.hasNext()) {
-                line = scanner.nextLine();
-                if(line.trim().length() == 0)
-                    break;
-                sb.append(line).append("\n");
-            }
-        } finally {
-            scanner.close();
-        }
-        return sb.toString();
     }
 
 
