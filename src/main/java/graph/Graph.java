@@ -2,15 +2,17 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * User: absharma
  * Date: 4/19/12
  */
 public class Graph {
-    private List<Edge> edges = new ArrayList<Edge>();
+    private Set<Edge> edges = new HashSet<Edge>();
     private List<Vertex> vertices = new ArrayList<Vertex>();
     private Map<String, Vertex> vertexMap = new HashMap<String, Vertex>();
 
@@ -23,7 +25,7 @@ public class Graph {
         vertices.add(v);
     }
 
-    public List<Edge> getEdges() {
+    public Set<Edge> getEdges() {
         return edges;
     }
 
@@ -45,5 +47,9 @@ public class Graph {
 
     public void removeEdge(Edge edge) {
         edges.remove(edge);
+    }
+
+    public int numEdges() {
+        return edges.size();
     }
 }

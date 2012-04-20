@@ -46,4 +46,21 @@ public class Vertex {
                 "'" + label + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vertex vertex = (Vertex) o;
+
+        if (!label.equals(vertex.label)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return label.hashCode();
+    }
 }

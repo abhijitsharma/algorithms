@@ -30,4 +30,24 @@ public class Edge {
                 "->" + sink +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Edge edge = (Edge) o;
+
+        if (!sink.equals(edge.sink)) return false;
+        if (!src.equals(edge.src)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = src.hashCode();
+        result = 31 * result + sink.hashCode();
+        return result;
+    }
 }

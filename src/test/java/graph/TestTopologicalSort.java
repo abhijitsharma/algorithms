@@ -3,6 +3,8 @@ package graph;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -38,6 +40,28 @@ public class TestTopologicalSort {
                 "10 3 11\n";
         processSpec(s, "1 3 4 5 6 7 11 8 2 10 9");
 
+        s = "5\n" +
+                "4\n" +
+                "5 1 2 3 4\n" +
+                "4 1 2 3\n" +
+                "3 2 1\n" +
+                "2 1\n";
+        processSpec(s, "1 2 3 4 5");
+
+        s = "3\n" +
+                "2\n" +
+                "1 2 3\n" +
+                "2 3\n";
+        processSpec(s, "3 2 1");
+
+        s = "0\n" +
+                "0\n";
+        processSpec(s, "");
+
+        s = "4\n" +
+                "0\n";
+        processSpec(s, "1 2 3 4");
+
         s = "3\n" +
                 "2\n" +
                 "1 2 3\n" +
@@ -61,15 +85,19 @@ public class TestTopologicalSort {
     }
 
     private void processSpec(String s, String expected) {
-        TopologicalSort sort = new TopologicalSort();
-        Graph graph = sort.createGraph(s);
-        StringBuilder sb = new StringBuilder();
-        List<Vertex> list = sort.sort(graph);
-        for (Vertex v : list) {
-            sb.append(v.getLabel() + " ");
+        try {
+            TopologicalSort sort = new TopologicalSort();
+            Graph graph = sort.createGraph(new ByteArrayInputStream(s.getBytes("UTF-8")));
+            StringBuilder sb = new StringBuilder();
+            List<Vertex> list = sort.sort(graph);
+            for (Vertex v : list) {
+                sb.append(v.getLabel()).append(" ");
+            }
+            Assert.assertEquals(expected, sb.toString().trim());
+            System.out.println(sb.toString());
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        Assert.assertEquals(expected, sb.toString().trim());
-        System.out.println(sb.toString());
     }
 
 }

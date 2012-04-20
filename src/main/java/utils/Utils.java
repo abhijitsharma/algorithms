@@ -33,9 +33,9 @@ public final class Utils {
 
     public static String processInput() {
         Scanner scanner = new Scanner(new BufferedInputStream(System.in));
+        scanner.useDelimiter("\n");
         StringBuilder sb = new StringBuilder();
         try {
-            scanner.useDelimiter("\n");
             String line;
             while(scanner.hasNext()) {
                 line = scanner.nextLine();
@@ -49,6 +49,8 @@ public final class Utils {
         return sb.toString();
     }
 
+    public static String getLine(Scanner scanner) {
+        return scanner.nextLine();
+    }
 
-    
 }

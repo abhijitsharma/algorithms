@@ -2,8 +2,11 @@ package graph;
 
 import utils.Utils;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * User: absharma
@@ -33,16 +36,17 @@ public class TopologicalSort {
                 }
             }
         }
-        if (graph.getEdges().size() != 0) { // all edges should have been removed
+
+        if (graph.numEdges() != 0) { // all edges should have been removed
             throw new IllegalStateException("There is a cycle ...");
         }
-        System.out.println();
+        
         return result;
     }
 
     public static void main(String[] args) {
         TopologicalSort sort = new TopologicalSort();
-        List<Vertex> list = sort.sort(sort.createGraph(Utils.processInput()));
+        List<Vertex> list = sort.sort(sort.createGraph(System.in));
         for (Vertex v : list) {
             System.out.print(v.getLabel() + " ");
         }
@@ -50,26 +54,32 @@ public class TopologicalSort {
     }
 
 
-    public Graph createGraph(String s) {
+    public Graph createGraph(InputStream in) {
         Graph graph = new Graph();
-        String[] lines = s.split("\n");
-        int nv = Integer.parseInt(lines[0]);
+        Scanner scanner = new Scanner(new BufferedInputStream(in));
+        scanner.useDelimiter("\n");
+
+        int nv = Integer.parseInt(Utils.getLine(scanner));
         for (int i = 1; i <= nv; i++) {
             Vertex v = new Vertex("" + i);
             graph.addVertex(v);
         }
 
-        int d = Integer.parseInt(lines[1]);
+        int d = Integer.parseInt(Utils.getLine(scanner));
         for (int i = 0; i < d; i++) {
-            String line = lines[2 + i];
-            String[] segs = line.split(" ");
-            Vertex sink = graph.getVertex(segs[0]);
-            for (int j = 1; j < segs.length; j++) {
-                Vertex source = graph.getVertex(segs[j]);
-                Edge edge = new Edge(source, sink);
-                graph.addEdge(edge);
-            }
+            String line = Utils.getLine(scanner);
+            processLine(graph, line);
         }
         return graph;
+    }
+
+    private void processLine(Graph graph, String line) {
+        String[] segs = line.split(" ");
+        Vertex sink = graph.getVertex(segs[0]);
+        for (int j = 1; j < segs.length; j++) {
+            Vertex source = graph.getVertex(segs[j]);
+            Edge edge = new Edge(source, sink);
+            graph.addEdge(edge);
+        }
     }
 }
