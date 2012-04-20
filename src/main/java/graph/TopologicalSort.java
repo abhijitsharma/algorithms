@@ -28,7 +28,7 @@ public class TopologicalSort {
             Vertex v = list.remove(0);// remove an element as all dependencies of this v is resolved
             result.add(v); // add to result
             for (Edge out : v.getOut()) { // consider all outgoing edges
-                Vertex sink = out.getSink();
+                Vertex sink = out.getV2();
                 sink.removeIn(out); // remove this edge from v's incoming edges
                 graph.removeEdge(out); // remove edge from graph
                 if (sink.getIn().size() == 0) { // if vertex now has no incoming add to exploration list
