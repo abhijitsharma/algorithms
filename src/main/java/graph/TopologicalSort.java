@@ -19,13 +19,13 @@ public class TopologicalSort {
 
         List<Vertex> list = new ArrayList<Vertex>();
         for (Vertex v : graph.getVertices()) {
-            if (v.getIn().size() == 0) { // add vertices with no incoming edges to exploration lists
+            if (v.getIn().size() == 0) { // add vertices with no incoming edges to exploration list
                 list.add(v);
             }
         }
 
         while (!list.isEmpty()) {
-            Vertex v = list.remove(0);// remove an element as all dependencies of this v is resolved
+            Vertex v = list.remove(0);// remove an element as all dependencies of this v are resolved (in = 0)
             result.add(v); // add to result
             for (Edge out : v.getOut()) { // consider all outgoing edges
                 Vertex sink = out.getV2();
@@ -52,6 +52,8 @@ public class TopologicalSort {
         }
         System.out.println();
     }
+
+    //todo DFS solution
 
 
     public Graph createGraph(InputStream in) {
