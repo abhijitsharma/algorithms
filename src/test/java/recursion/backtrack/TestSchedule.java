@@ -68,12 +68,16 @@ public class TestSchedule {
     }
 
     private void testIt(String s) throws UnsupportedEncodingException {
-        Schedule schedule = new Schedule();
-        int[][] taskDays = schedule.createData(new ByteArrayInputStream(s.getBytes("UTF-8")));
-        int[] result = schedule.solve(taskDays);
-        for(int i : result) {
-            System.out.print(i + " ");
+        System.out.println("======");
+        Schedule sch = new Schedule();
+        int[][] taskDays = sch.createData(new ByteArrayInputStream(s.getBytes("UTF-8")));
+        int[][] schedules = sch.solve(taskDays);
+        for (int[] schedule : schedules) {
+            for (int task : schedule) {
+                System.out.print(task + " ");
+            }
+            System.out.println();
         }
-        System.out.println();
+
     }
 }

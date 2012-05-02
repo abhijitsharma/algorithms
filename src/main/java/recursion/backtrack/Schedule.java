@@ -18,19 +18,25 @@ import java.util.TreeMap;
  */
 public class Schedule {
     
-    public int[] solve(int[][] taskDays) {
+    public int[][] solve(int[][] taskDays) {
         int[][] dayTasks = flip(taskDays);
 //        print(dayTasks);
         Map<Integer, Integer> assignment = new TreeMap<Integer, Integer>();
         Set<Integer> tasks = new HashSet<Integer>();
-        search(0, dayTasks, assignment, tasks);
-        if(assignment.size() != dayTasks.length) {
+        List<Map<Integer, Integer>> solutions = new ArrayList<Map<Integer, Integer>>();
+        search(0, dayTasks, assignment, tasks, solutions);
+        if(solutions.size() == 0) {
             throw new IllegalStateException("");
         }
-        return mapToArray(assignment);
+        int [][] results = new int[solutions.size()][];
+        int i = 0;
+        for(Map<Integer, Integer> solution : solutions) {
+            results[i++] = mapToArray(solution);
+        }
+        return results;
     }
 
-    private void search(int day, int[][] dayTasks, Map<Integer, Integer> assignment, Set<Integer> tasks) {
+    private void search(int day, int[][] dayTasks, Map<Integer, Integer> assignment, Set<Integer> tasks, List<Map<Integer, Integer>> solutions) {
         indent += 2;
 //        System.out.println(chars(indent, ' ') + "> search " + day);
         if (day >= dayTasks.length)
@@ -42,13 +48,12 @@ public class Schedule {
                 assignment.put(day, t);
                 tasks.add(t);
 //                System.out.println(chars(indent, ' ') + "day " + day + " task = " + t + " ::: " + i);
-                search(day + 1, dayTasks, assignment, tasks);
-                if(assignment.size() == dayTasks.length) {
-                    return;
-                } else {
-                    assignment.remove(day);
-                    tasks.remove(t);
+                search(day + 1, dayTasks, assignment, tasks, solutions);
+                if(tasks.size() == dayTasks.length) {
+                    solutions.add(new TreeMap<Integer, Integer>(assignment));
                 }
+                assignment.remove(day);
+                tasks.remove(t);
             } else {
 //                System.out.println(chars(indent, ' ') + "day " + day + " already assigned task = " + t);
             }
@@ -109,11 +114,13 @@ public class Schedule {
     public static void main(String[] args) {
         try {
             Schedule sort = new Schedule();
-            int[] schedule = sort.solve(sort.createData(System.in));
-            for (int task : schedule) {
-                System.out.print(task + " ");
+            int[][] schedules = sort.solve(sort.createData(System.in));
+            for (int[] schedule : schedules) {
+                for (int task : schedule) {
+                    System.out.print(task + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
         } catch (IllegalStateException e) {
             System.out.println("No Solution");
         }
