@@ -22,7 +22,7 @@ public class TestCircuitSolve {
                 "b c 2\n" +
                 "b c 2";
 
-        processSpec(s, "a c 2");
+        processSpec(s, "a c 2.0");
 
         // Pure Parallel
         s = "2 a b\n" +
@@ -99,7 +99,7 @@ public class TestCircuitSolve {
             Graph graph = solve.createGraph(new ByteArrayInputStream(s.getBytes("UTF-8")), labels);
             Vertex start = graph.vertex(labels[0]);
             StringBuilder sb = new StringBuilder();
-            graph = solve.solve(graph, start);
+            graph = solve.solve(graph);
             for (Edge e : graph.edges()) {
                 sb.append(e.v1().label()).append(" ").append(e.v2().label()).append(" ").append(e.weight());
                 sb.append("\n");

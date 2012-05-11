@@ -15,7 +15,16 @@ import java.util.Scanner;
  */
 public class CircuitSolve {
 
-    public Graph solve(Graph graph, Vertex start) {
+    public Graph solve(Graph graph) {
+        int prev = 0;
+        do {
+            prev = graph.numEdges();
+            _solve(graph);
+        } while (prev != graph.numEdges());
+        return graph;
+    }
+
+    private Graph _solve(Graph graph) {
         LinkedList<Vertex> vertices = new LinkedList<Vertex>();
         for (Vertex v : graph.vertices()) {
             vertices.add(v);
@@ -39,7 +48,7 @@ public class CircuitSolve {
         }
         Edge e = outEdges.poll();
         while (e != null) {
-            System.out.println("Processing : edge : " + e.label());
+//            System.out.println("Processing : edge : " + e.label());
             simplifySerial(graph, v, e, vertices, outEdges);
             e = outEdges.poll();
 
@@ -123,11 +132,13 @@ public class CircuitSolve {
         String[] labels = new String[2];
         Graph graph = solve.createGraph(System.in, labels);
         Vertex start = graph.vertex(labels[0]);
-        graph = solve.solve(graph, start);
+        graph = solve.solve(graph);
+        StringBuilder sb = new StringBuilder();
         for (Edge e : graph.edges()) {
-            System.out.print(e.v1() + " " + e.v2() + " ");
+            sb.append(e.v1().label()).append(" ").append(e.v2().label()).append(" ").append(e.weight());
+            sb.append("\n");
         }
-        System.out.println();
+        System.out.print(sb.toString());
     }
 
     public Graph createGraph(InputStream in, String[] labels) {
