@@ -91,7 +91,7 @@ public class TestTopologicalSort {
             StringBuilder sb = new StringBuilder();
             List<Vertex> list = sort.sort(graph);
             for (Vertex v : list) {
-                sb.append(v.getLabel()).append(" ");
+                sb.append(v.label()).append(" ");
             }
             Assert.assertEquals(expected, sb.toString().trim());
             System.out.println(sb.toString());

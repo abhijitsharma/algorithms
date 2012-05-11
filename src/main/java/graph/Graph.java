@@ -21,19 +21,24 @@ public class Graph {
     }
 
     public void addVertex(Vertex v) {
-        vertexMap.put(v.getLabel(), v);
+        vertexMap.put(v.label(), v);
         vertices.add(v);
     }
 
-    public Set<Edge> getEdges() {
+    public void removeVertex(Vertex v) {
+        vertexMap.remove(v.label());
+        vertices.remove(v);
+    }
+
+    public Set<Edge> edges() {
         return edges;
     }
 
-    public List<Vertex> getVertices() {
+    public List<Vertex> vertices() {
         return vertices;
     }
 
-    public Vertex getVertex(String label) {
+    public Vertex vertex(String label) {
         return vertexMap.get(label);
     }
 
@@ -47,6 +52,13 @@ public class Graph {
 
     public void removeEdge(Edge edge) {
         edges.remove(edge);
+        if(edge.directed()) {
+            edge.v1().removeOut(edge);
+            edge.v2().removeIn(edge);
+        } else {
+            edge.v1().removeEdge(edge);
+            edge.v2().removeEdge(edge);
+        }
     }
 
     public int numEdges() {

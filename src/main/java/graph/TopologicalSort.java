@@ -18,8 +18,8 @@ public class TopologicalSort {
         List<Vertex> result = new ArrayList<Vertex>();
 
         List<Vertex> list = new ArrayList<Vertex>();
-        for (Vertex v : graph.getVertices()) {
-            if (v.getIn().size() == 0) { // add vertices with no incoming edges to exploration list
+        for (Vertex v : graph.vertices()) {
+            if (v.inEdges().size() == 0) { // add vertices with no incoming edges to exploration list
                 list.add(v);
             }
         }
@@ -27,11 +27,11 @@ public class TopologicalSort {
         while (!list.isEmpty()) {
             Vertex v = list.remove(0);// remove an element as all dependencies of this v are resolved (in = 0)
             result.add(v); // add to result
-            for (Edge out : v.getOut()) { // consider all outgoing edges
-                Vertex sink = out.getV2();
-                sink.removeIn(out); // remove this edge from v's incoming edges
+            List<Edge> cloneOut = new ArrayList<Edge>(v.outEdges());
+            for (Edge out : cloneOut) { // consider all outgoing edges
+                Vertex sink = out.v2();
                 graph.removeEdge(out); // remove edge from graph
-                if (sink.getIn().size() == 0) { // if vertex now has no incoming add to exploration list
+                if (sink.inEdges().size() == 0) { // if vertex now has no incoming add to exploration list
                     list.add(sink);
                 }
             }
@@ -48,7 +48,7 @@ public class TopologicalSort {
         TopologicalSort sort = new TopologicalSort();
         List<Vertex> list = sort.sort(sort.createGraph(System.in));
         for (Vertex v : list) {
-            System.out.print(v.getLabel() + " ");
+            System.out.print(v.label() + " ");
         }
         System.out.println();
     }
@@ -77,10 +77,10 @@ public class TopologicalSort {
 
     private void processLine(Graph graph, String line) {
         String[] segs = line.split(" ");
-        Vertex sink = graph.getVertex(segs[0]);
+        Vertex sink = graph.vertex(segs[0]);
         for (int j = 1; j < segs.length; j++) {
-            Vertex source = graph.getVertex(segs[j]);
-            Edge edge = new Edge(source, sink);
+            Vertex source = graph.vertex(segs[j]);
+            Edge edge = new Edge(source, sink, true);
             graph.addEdge(edge);
         }
     }

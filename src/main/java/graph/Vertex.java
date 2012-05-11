@@ -11,9 +11,14 @@ public class Vertex {
     private String label;
     private List<Edge> in = new ArrayList<Edge>();
     private List<Edge> out = new ArrayList<Edge>();
+    private List<Edge> adjacent = new ArrayList<Edge>();
 
     public Vertex(String label) {
         this.label = label;
+    }
+
+    public void addEdge(Edge e) {
+        adjacent.add(e);
     }
 
     public void addIn(Edge e) {
@@ -28,23 +33,28 @@ public class Vertex {
         in.remove(e);
     }
 
-    public String getLabel() {
+    public void removeOut(Edge e) {
+        out.remove(e);
+    }
+
+    public void removeEdge(Edge e) {
+        adjacent.remove(e);
+    }
+
+    public String label() {
         return label;
     }
 
-    public List<Edge> getIn() {
+    public List<Edge> inEdges() {
         return in;
     }
 
-    public List<Edge> getOut() {
+    public List<Edge> outEdges() {
         return out;
     }
 
-    @Override
-    public String toString() {
-        return "v{" +
-                "'" + label + '\'' +
-                '}';
+    public List<Edge> adjacentEdges() {
+        return adjacent;
     }
 
     @Override
@@ -62,5 +72,14 @@ public class Vertex {
     @Override
     public int hashCode() {
         return label.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Vertex");
+        sb.append("{label='").append(label).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
