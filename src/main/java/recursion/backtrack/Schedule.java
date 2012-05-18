@@ -36,7 +36,11 @@ public class Schedule {
         return results;
     }
 
-    private void search(int day, int[][] dayTasks, Map<Integer, Integer> assignment, Set<Integer> tasks, List<Map<Integer, Integer>> solutions) {
+    private void search(int day,
+                        int[][] dayTasks,
+                        Map<Integer, Integer> assignment,
+                        Set<Integer> tasks,
+                        List<Map<Integer, Integer>> solutions) {
         indent += 2;
 //        System.out.println(chars(indent, ' ') + "> search " + day);
         if (day >= dayTasks.length)

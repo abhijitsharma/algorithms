@@ -1,7 +1,5 @@
 package graph;
 
-import utils.Utils;
-
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,6 +17,7 @@ public class CircuitSolve {
         int prev = 0;
         do {
             prev = graph.numEdges();
+//            System.out.println(prev);
             _solve(graph);
         } while (prev != graph.numEdges());
         return graph;
@@ -63,8 +62,10 @@ public class CircuitSolve {
         Edge edge2 = null;
         Vertex v2 = edge1.v2();
         Vertex v3 = null;
+        int inDegree = v2.inEdges().size();
+        int outDegree = v2.outEdges().size();
         List<Edge> v2Edges = v2.outEdges();
-        if (v2Edges.size() == 1) {
+        if (inDegree == 1 && outDegree == 1) {
             edge2 = v2Edges.get(0);
             v3 = edge2.v2();
             float weight = edge1.weight() + edge2.weight();
@@ -146,13 +147,13 @@ public class CircuitSolve {
         Scanner scanner = new Scanner(new BufferedInputStream(in));
         scanner.useDelimiter("\n");
 
-        String firstLine = Utils.getLine(scanner);
+        String firstLine = scanner.nextLine();
         String[] parts = firstLine.split(" ");
         labels[0] = parts[1];
         labels[1] = parts[2];
         int edges = Integer.parseInt(parts[0]);
         for (int i = 0; i < edges; i++) {
-            String line = Utils.getLine(scanner);
+            String line = scanner.nextLine();
             processLine(graph, line);
         }
         return graph;
