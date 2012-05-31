@@ -26,7 +26,7 @@ public class QuickSort {
 
         for (int i = 0; i < is.size() - 1; i++) { // exclude the pivot i.e. the last element
             int value = is.get(i);
-            if (value < pivot) { // split into arrays that are less and more than pivot
+            if (value < pivot) { // split into arrays that are < and >= pivot
                 less.add(value);
             } else {
                 more.add(value);

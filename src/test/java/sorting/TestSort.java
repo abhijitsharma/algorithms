@@ -14,26 +14,48 @@ import java.util.List;
  */
 public class TestSort {
 
-    @Test
-    public void testQuickSort() {
-        testQuickSortBoth(null, new ArrayList<Integer>());
-        testQuickSortBoth(null, null);
-        testQuickSortBoth(Arrays.asList(1), Arrays.asList(1));
-        testQuickSortBoth(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-        testQuickSortBoth(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
-        testQuickSortBoth(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(1, 2, 3, 4, 5));
-        testQuickSortBoth(Arrays.asList(5, 4, 3, 2, 1), Arrays.asList(1, 2, 3, 4, 5));
-    }
-
-    private void testQuickSortBoth(List<Integer> is, List<Integer> expected) {
-        testQuickSortRecursive(is, expected);
-    }
-
-    private static void testQuickSortRecursive(List<Integer> is, List<Integer> expected) {
-        QuickSort qs = new QuickSort();
-        List<Integer> rs = qs.recursiveSort(is);
+    private static void mergeSort(List<Integer> is, List<Integer> expected) {
+        MergeSort sort = new MergeSort();
+        List<Integer> rs = sort.sort(is);
         Utils.printList(rs);
         Utils.printList(expected);
+        System.out.println("--");
+        Assert.assertTrue(Utils.listEquals(rs, expected));
+    }
+
+    private static void bubbleSort(List<Integer> is, List<Integer> expected) {
+        BubbleSort sort = new BubbleSort();
+        List<Integer> rs = sort.sort(is);
+        Utils.printList(rs);
+        Utils.printList(expected);
+        System.out.println("--");
+        Assert.assertTrue(Utils.listEquals(rs, expected));
+    }
+
+    @Test
+    public void testSort() {
+        testSortAll(null, new ArrayList<Integer>());
+        testSortAll(null, null);
+        testSortAll(Arrays.asList(1), Arrays.asList(1));
+        testSortAll(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        testSortAll(Arrays.asList(3, 9, 8, 7, 2, 4, 1, 2, 6, 5), Arrays.asList(1, 2, 2, 3, 4, 5, 6, 7, 8, 9));
+        testSortAll(Arrays.asList(3, 9, 8, 7, 2, 5, 4, 1, 6, 5), Arrays.asList(1, 2, 3, 4, 5, 5, 6, 7, 8, 9));
+        testSortAll(Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(1, 2, 3, 4, 5));
+        testSortAll(Arrays.asList(5, 4, 3, 2, 1), Arrays.asList(1, 2, 3, 4, 5));
+    }
+
+    private void testSortAll(List<Integer> is, List<Integer> expected) {
+        quickSort(is, expected);
+        mergeSort(is, expected);
+        bubbleSort(is, expected);
+    }
+
+    private static void quickSort(List<Integer> is, List<Integer> expected) {
+        QuickSort sort = new QuickSort();
+        List<Integer> rs = sort.recursiveSort(is);
+        Utils.printList(rs);
+        Utils.printList(expected);
+        System.out.println("--");
         Assert.assertTrue(Utils.listEquals(rs, expected));
     }
 
