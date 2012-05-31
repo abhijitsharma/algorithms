@@ -19,9 +19,4 @@ public class Parenthesis {
         }
         return n == 0;
     }
-
-    //todo
-    public boolean matchParenthesisStackBased(String s) {
-        return true;
-    }
 }

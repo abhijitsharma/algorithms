@@ -11,7 +11,7 @@ import java.util.List;
  * User: absharma
  * Date: 5/11/12
  */
-public class TestExplosionRedux {
+public class TestExplosion {
     @Test
     public void testSolve() {
         String s;
@@ -35,6 +35,12 @@ public class TestExplosionRedux {
         processSpec(s, "1 4\n2 4\n3 4\n4 4");
 
         s = "4\n" +
+                "0 2 4 6\n" +
+                "10 10 10 10";
+
+        processSpec(s, "1 4\n2 4\n3 4\n4 4");
+
+        s = "4\n" +
                 "0 4 8 12\n" +
                 "2 2 2 2";
 
@@ -49,19 +55,21 @@ public class TestExplosionRedux {
     }
 
     private void processSpec(String s, String expected) {
+//        System.out.println(s);
+//        System.out.println();
 //        System.out.println("==========");
         try {
-            ExplosionRedux explosion = new ExplosionRedux();
-            List<ExplosionRedux.Bird> birds = explosion.createRanges(new ByteArrayInputStream(s.getBytes("UTF-8")));
+            Explosion explosion = new Explosion();
+            List<Explosion.Bird> birds = explosion.createRanges(new ByteArrayInputStream(s.getBytes("UTF-8")));
 //            for (int i = 0; i < birds.size(); i++) {
-//                ExplosionRedux.Bird bird = birds.get(i);
+//                Explosion.Bird bird = birds.get(i);
 //                System.out.println(bird);
 //            }
             StringBuilder sb = new StringBuilder();
             int[][] birdKills = explosion.process(birds);
 //            System.out.println("----------");
 //            for (int i = 0; i < birds.size(); i++) {
-//                ExplosionRedux.Bird bird = birds.get(i);
+//                Explosion.Bird bird = birds.get(i);
 //                System.out.println(bird);
 //            }
 
@@ -71,6 +79,7 @@ public class TestExplosionRedux {
             }
             Assert.assertEquals(expected, sb.toString().trim());
             System.out.println(sb.toString());
+//            System.out.println("-------");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

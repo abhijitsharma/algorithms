@@ -16,7 +16,7 @@ import java.util.Set;
  * User: absharma
  * Date: 5/18/12
  */
-public class ExplosionRedux {
+public class Explosion {
 
 
     public int[][] process(List<Bird> birds) {
@@ -40,12 +40,11 @@ public class ExplosionRedux {
 
     private void doProcess(Map<Integer, Set<Bird>> neighbourMap, List<Bird> birds) {
         for (Bird b : birds) {
-//            System.out.println("b.index = " + b.index);
             Set<Bird> visited = new HashSet<Bird>();
             _process(neighbourMap, b, visited);
             b.count = visited.size();
 //            System.out.println(b.index);
-//            for(Bird v :  visited) {
+//            for (Bird v : visited) {
 //                System.out.print(v.index + " ");
 //            }
 //            System.out.println();
@@ -55,8 +54,7 @@ public class ExplosionRedux {
     private int indent = 0;
 
     private void _process(Map<Integer, Set<Bird>> neighbourMap, Bird bird, Set<Bird> visited) {
-//        System.out.println("ExplosionRedux._process");
-//        indent += 4;
+        indent += 4;
 //        System.out.println(spaces(indent) + " Bird -> " + bird.index);
         visited.add(bird);
         for (Bird b : neighbourMap.get(bird.index)) {
@@ -64,12 +62,12 @@ public class ExplosionRedux {
                 _process(neighbourMap, b, visited);
             }
         }
-//        indent -= 4;
+        indent -= 4;
     }
 
     private String spaces(int indent) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < indent; i++) {
+        for (int i = 0; i < indent; i++) {
             sb.append(" ");
         }
         return sb.toString();
@@ -85,12 +83,8 @@ public class ExplosionRedux {
         for (Bird bird : birds) {
             if (bird.index == current.index)
                 continue;
-            if (bird.x >= current.x - current.radius && bird.index < current.index) {
+            if(current.inRange(bird)) {
                 neighbours.add(bird);
-            } else if (bird.x <= current.x + current.radius && bird.index > current.index) {
-                neighbours.add(bird);
-            } else if (bird.x > current.x + current.radius) {
-                break;
             }
         }
     }
@@ -160,7 +154,7 @@ public class ExplosionRedux {
     }
 
     public static void main(String[] args) {
-        ExplosionRedux explosion = new ExplosionRedux();
+        Explosion explosion = new Explosion();
         List<Bird> birds = explosion.createRanges(System.in);
         StringBuilder sb = new StringBuilder();
         int[][] birdKills = explosion.process(birds);
@@ -186,6 +180,15 @@ public class ExplosionRedux {
                     ", radius=" + radius +
                     ", count=" + count +
                     '}';
+        }
+
+        public boolean inRange(Bird bird) {
+            if (bird.x >= this.x - this.radius && bird.index < this.index) {
+                return true;
+            } else if (bird.x <= this.x + this.radius && bird.index > this.index) {
+                return true;
+            }
+            return false;
         }
 
         @Override
