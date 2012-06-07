@@ -18,4 +18,6 @@
     - search
 * Graph
     - Hamiltonian traversal - Graph
-* Knuth's Dancing Links - Sudoko, Pentonimo - see Hadoop code for a MR impl.
+* Knuth's Dancing Links - Sudoko, Pentonimo - see Hadoop code for a MR impl
+
+

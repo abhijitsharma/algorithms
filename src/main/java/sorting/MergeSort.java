@@ -8,6 +8,7 @@ import java.util.List;
  * Date: 3/28/12
  */
 public class MergeSort {
+
     private MergeSortedLists merger = new MergeSortedLists();
 
     /**
@@ -17,7 +18,7 @@ public class MergeSort {
      * @return list of sorted integers
      */
     public List<Integer> sort(List<Integer> is) {
-        int size = is == null ? 0 : is.size();
+        int size = (is == null) ? 0 : is.size();
         if (size <= 1) { // array of 0/1 elements is sorted
             return is;
         }
@@ -34,5 +35,5 @@ public class MergeSort {
         }
         return merger.merge(sort(l1), sort(l2));
     }
-
+    
 }
