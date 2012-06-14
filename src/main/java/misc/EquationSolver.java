@@ -29,14 +29,15 @@ public class EquationSolver {
         }
 
         final Expression e = new Expression();
-        Set<List<String>> ops = permute.permute(opList, numSlots, new Permutations.PermutationCallback() {
+        Permutations.PermutationCallback callback = new Permutations.PermutationCallback() {
             @Override
             public boolean call(List<String> solution) {
                 List<String> expr = createExpr(nums, solution);
                 int o = e.evaluate(e.infixToPostFix(expr));
-                return (o == rhs);
+                return (o != rhs);
             }
-        });
+        };
+        Set<List<String>> ops = permute.permute(opList, numSlots, callback);
 
         for (List<String> op : ops) {
             List<String> expr = createExpr(nums, op);

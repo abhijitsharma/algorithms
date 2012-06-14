@@ -24,7 +24,7 @@ public class TestEquationSolver {
 
         processSpec(s, "-*");
 
-        // works but too slow 
+        // works but too slow
         s = "5\n" +
                 "1 1 1 1 4";
 
@@ -34,6 +34,21 @@ public class TestEquationSolver {
                 "7 5 3 2 29";
 
         processSpec(s, "*-*");
+
+        s = "7\n" +
+                "1 2 3 4 5 6 720";
+
+        processSpec(s, "*****");
+
+        s = "7\n" +
+                "4 -3 6 2 20 5 3";
+
+        processSpec(s, "+*++-");
+
+        s = "3\n" +
+                "-15 -15 225";
+
+        processSpec(s, "*");
     }
 
     private void processSpec(String s, String expected) throws Exception{

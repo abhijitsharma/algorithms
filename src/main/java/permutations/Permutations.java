@@ -1,6 +1,7 @@
 package permutations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,15 +23,24 @@ public class Permutations {
 
     public Set<List<String>> permute(List<String> objects, int numSlots, PermutationCallback callback) {
         Map<String, Integer> available = new HashMap<String, Integer>();
+        Set<String> unique = new HashSet<String>();
         for (String object : objects) {
             Integer count = available.get(object);
             if (count == null) {
                 count = 0;
             }
+            unique.add(object);
             available.put(object, ++count);
         }
         Set<List<String>> results = new HashSet<List<String>>();
-        _permute(null, objects, numSlots, new Stack<String>(), available, results, callback);
+        _permute(null,
+                new ArrayList<String>(unique),
+                numSlots,
+                new Stack<String>(),
+                available,
+                results,
+                callback,
+                Arrays.asList(true));
         return results;
     }
 
@@ -41,9 +51,9 @@ public class Permutations {
             Stack<String> stack,
             Map<String, Integer> available,
             Set<List<String>> results,
-            PermutationCallback callback) {
+            PermutationCallback callback, List<Boolean> boolHolder) {
         indent += 4;
-
+        boolean goOn = boolHolder.get(0);
         if (curr != null) {
             Integer count = available.get(curr);
             available.put(curr, --count);
@@ -51,11 +61,15 @@ public class Permutations {
 //            System.out.println(spaces(indent) + "_p " + curr + "[ " + available + "]");
         }
 
-        boolean goOn = true;
         if (stack.size() == numSlots) { // found a solution
             List<String> solution = new ArrayList<String>(stack);
-            if(callback != null)
-                goOn = callback.call(solution);
+            if(callback != null) {
+                if(goOn) {
+                    goOn = callback.call(solution);
+                    boolHolder.set(0, goOn);
+                }
+
+            }
             results.add(solution);
         }
 
@@ -63,7 +77,7 @@ public class Permutations {
             for (String j : objects) {
                 Integer c = available.get(j);
                 if (c > 0) {
-                    _permute(j, objects, numSlots, stack, available, results, callback);
+                    _permute(j, objects, numSlots, stack, available, results, callback, boolHolder);
                 }
             }
 
