@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
  * User: absharma
  * Date: 6/14/12
  */
-public class EquationSolver {
+public class EquationSolver implements EqSolver {
     private static final List<String> operators = Arrays.asList("+", "-", "*");
 
     public List<String> solve(final List<String> nums, final Integer rhs) {

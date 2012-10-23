@@ -2,14 +2,6 @@ package misc;
 
 import utils.Utils;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +16,9 @@ public class MarkovSentenceGenerator {
 
     public static void main(String[] args) throws Exception {
         int totalWords = args.length > 0 ? Integer.parseInt(args[0]) : 1000;
+        String filePath = args.length > 1 ? args[1] : "E:\\nltk_data\\corpora\\gutenberg\\melville-moby_dick.txt";
         Chain chain = new Chain(2, totalWords);
-        String s = Utils.readStream("E:\\nltk_data\\corpora\\gutenberg\\melville-moby_dick.txt");
+        String s = Utils.readStream(filePath);
         chain.build(s);
         chain.generate();
     }
@@ -59,6 +52,8 @@ class Chain {
     void build(String s) {
         String[] parts = s.split(" ");
         for (String part : parts) {
+            if(part.trim().equals(NON_WORD))
+                continue;
             addWord(part.toLowerCase());
         }
         addWord(NON_WORD);

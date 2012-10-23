@@ -2,10 +2,10 @@ package misc;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
@@ -16,7 +16,6 @@ import java.util.TreeSet;
 public class NthLargest {
 
     private TreeSet<Integer> allDigits = new TreeSet<Integer>();
-    private Map<Integer, Integer> digitsAvail = new HashMap<Integer, Integer>();
     private int start = -1;
     private int n = -1;
 
@@ -27,11 +26,6 @@ public class NthLargest {
         for (int i = 0; i < digits; i++) {
             int j = Integer.parseInt("" + s.charAt(i));
             allDigits.add(j);
-            Integer count = digitsAvail.get(j);
-            if (count == null) {
-                count = 0;
-            }
-            digitsAvail.put(j, ++count);
         }
 
         Integer out = process();
@@ -42,7 +36,7 @@ public class NthLargest {
 
     private Integer process() {
         List<Integer> result = new ArrayList<Integer>();
-        _process(-1, new int[]{-1}, new Stack<Integer>(), result);
+        _process(-1, new int[]{-1}, new HashSet<Integer>(), new Stack<Integer>(), result);
         if (result.size() == 1) {
             return result.get(0);
         }
@@ -52,14 +46,14 @@ public class NthLargest {
     private void _process(
             int currDigit,
             int[] counterHolder,
+            Set<Integer> digitsUsed,
             Stack<Integer> stack,
             List<Integer> result) {
 
         indent += 4;
 //        System.out.println(spaces(indent) + "_p " + currDigit);
         if (currDigit != -1) {
-            Integer count = digitsAvail.get(currDigit);
-            digitsAvail.put(currDigit, --count);
+            digitsUsed.add(currDigit);
             stack.push(currDigit);
         }
 
@@ -84,16 +78,11 @@ public class NthLargest {
 
         if (result.size() == 0) // recurse further only if solution not found
             for (Integer j : allDigits) {
-                Integer c = digitsAvail.get(j);
-                if (c > 0) {
-                    _process(j, counterHolder, stack, result);
+                if (!digitsUsed.contains(j)) {
+                    _process(j, counterHolder, digitsUsed, stack, result);
                 }
             }
-
-        if(currDigit != -1) {
-            Integer count = digitsAvail.get(currDigit);
-            digitsAvail.put(currDigit, ++count);
-        }
+        digitsUsed.remove(currDigit);
         if (!stack.empty())
             stack.pop();
         indent -= 4;

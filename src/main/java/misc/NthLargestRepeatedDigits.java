@@ -43,11 +43,48 @@ public class NthLargestRepeatedDigits {
 
     private Integer process() {
         List<Integer> result = new ArrayList<Integer>();
-        _process(-1, new int[]{-1}, new Stack<Integer>(), result);
+        _permute(-1, new int[]{-1}, new Stack<Integer>(), result);
         if (result.size() == 1) {
             return result.get(0);
         }
         return null;
+    }
+
+    private void _permute(
+            int currDigit,
+            int[] counterHolder,
+            Stack<Integer> stack,
+            List<Integer> result) {
+
+        indent += 4;
+
+        if (currDigit != -1) {
+            Integer count = digitsAvail.get(currDigit);
+            digitsAvail.put(currDigit, --count);
+            stack.push(currDigit);
+//            System.out.println(spaces(indent) + "_p " + currDigit + "[ " + digitsAvail + "]");
+        }
+
+        if (stack.size() == allDigits.size()) { // found a solution
+            int r = Integer.parseInt(stackToString(stack));
+            System.out.println(r);
+        }
+
+        if (result.size() == 0) // recurse further only if solution not found
+            for (Integer j : allDigits) {
+                Integer c = digitsAvail.get(j);
+                if (c > 0) {
+                    _permute(j, counterHolder, stack, result);
+                }
+            }
+
+        if(currDigit != -1) {
+            Integer count = digitsAvail.get(currDigit);
+            digitsAvail.put(currDigit, ++count);
+        }
+        if (!stack.empty())
+            stack.pop();
+        indent -= 4;
     }
 
     private void _process(
@@ -62,8 +99,9 @@ public class NthLargestRepeatedDigits {
             Integer count = digitsAvail.get(currDigit);
             digitsAvail.put(currDigit, --count);
             stack.push(currDigit);
+            System.out.println(spaces(indent) + "_p " + currDigit + "[ " + digitsAvail + "]");
         }
-        System.out.println(spaces(indent) + "_p " + currDigit + "[ " + digitsAvail + "]");
+
 
         if (stack.size() == allDigits.size()) { // found a solution
             int r = Integer.parseInt(stackToString(stack));

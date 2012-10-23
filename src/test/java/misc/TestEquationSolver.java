@@ -17,42 +17,67 @@ public class TestEquationSolver {
 
     @Test
     public void testSolve() throws Exception{
+        common(new EquationSolver());
+    }
+
+    @Test
+    public void testSolveBackTrack() throws Exception{
+        common(new EquationSolverBackTrack());
+    }
+
+    public void common(EqSolver solver) throws Exception{
         String s;
 
         s = "4\n" +
                 "8 5 2 -2";
 
-        processSpec(s, "-*");
+        processSpec(s, "-*", solver);
 
         // works but too slow
         s = "5\n" +
                 "1 1 1 1 4";
 
-        processSpec(s, "+++");
+        processSpec(s, "+++", solver);
 
         s = "5\n" +
                 "7 5 3 2 29";
 
-        processSpec(s, "*-*");
+        processSpec(s, "*-*", solver);
 
         s = "7\n" +
                 "1 2 3 4 5 6 720";
 
-        processSpec(s, "*****");
+        processSpec(s, "*****", solver);
 
         s = "7\n" +
                 "4 -3 6 2 20 5 3";
 
-        processSpec(s, "+*++-");
+        processSpec(s, "+*++-", solver);
 
         s = "3\n" +
                 "-15 -15 225";
 
-        processSpec(s, "*");
+        processSpec(s, "*", solver);
+
+        s = "3\n" +
+                "1 2 2";
+
+        processSpec(s, "*", solver);
+
+        s = "4\n" +
+                "1 2 3 6";
+
+        processSpec(s, "**", solver);
+
+        s = "5\n" +
+                "1 2 3 4 24";
+
+        processSpec(s, "***", solver);
+
+
     }
 
-    private void processSpec(String s, String expected) throws Exception{
-        EquationSolver solver = new EquationSolver();
+    private void processSpec(String s, String expected, EqSolver solver) throws Exception{
         Scanner scanner = new Scanner(new ByteArrayInputStream(s.getBytes("UTF-8")));
         scanner.useDelimiter("\n");
         int n = Integer.parseInt(scanner.nextLine().trim());

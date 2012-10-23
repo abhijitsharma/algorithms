@@ -52,6 +52,16 @@ public class TestExplosion {
 
         processSpec(s, "1 3\n2 3");
 
+        s = "5\n" +
+                "1 10 11 19 20\n" +
+                "8 1 11 1 1";
+
+        processSpec(s, "2 5\n3 5");
+        s = "6\n" +
+                "1 10 11 18 19 20\n" +
+                "8 1 11 1 1 1";
+
+        processSpec(s, "2 6\n3 6");
     }
 
     private void processSpec(String s, String expected) {
