@@ -35,7 +35,7 @@ public final class Utils {
                 System.out.print(o + ", ");
             }
         }
-        System.out.println("]");
+        System.out.print("]");
     }
 
     public static String readStream(String path) throws IOException {
