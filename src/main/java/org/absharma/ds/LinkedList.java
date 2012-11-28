@@ -7,6 +7,10 @@ package org.absharma.ds;
 public class LinkedList<T> {
     private LLNode<T> head;
 
+    public LLNode<T> getHead() {
+        return head;
+    }
+
     public void addFirst(T t) {
         LLNode<T> node = new LLNode<T>();
         node.data = t;

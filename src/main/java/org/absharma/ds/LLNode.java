@@ -7,4 +7,9 @@ package org.absharma.ds;
 public class LLNode<T> {
     public T data;
     public LLNode<T> next;
+
+    @Override
+    public String toString() {
+        return "'" + data + "'";
+    }
 }

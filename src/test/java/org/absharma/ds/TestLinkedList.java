@@ -26,6 +26,25 @@ public class TestLinkedList {
     }
 
     @Test
+    public void testLLHead() {
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        ll.addFirst(1);
+        ll.addFirst(2);
+        ll.addFirst(3);
+        Assert.assertEquals(ll.getHead().data, 3);
+        ll.remove(3);
+        Assert.assertEquals(ll.getHead().data, 2);
+        ll.remove(2);
+        Assert.assertEquals(ll.getHead().data, 1);
+        ll.remove(1);
+        Assert.assertNull(ll.getHead());
+        ll.addFirst(1);
+        Assert.assertEquals(ll.getHead().data, 1);
+        ll.addFirst(2);
+        Assert.assertEquals(ll.getHead().data, 2);
+    }
+
+    @Test
     public void testLLInsertAfter() {
         LinkedList<Integer> ll = new LinkedList<Integer>();
         ll.addFirst(5);
