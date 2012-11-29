@@ -1,7 +1,8 @@
-package org.absharma.ds.org.absharma.sort;
+package org.absharma.ds;
 
 import junit.framework.Assert;
 import org.absharma.sort.SelectionSort;
+import org.absharma.sort.Sort;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class TestSort {
 
     @Test
     public void testSelectionSortOnInts() {
-        SelectionSort sort = new SelectionSort();
+        Sort<Integer> sort = new SelectionSort<Integer>();
         for (int i = 0; i < intCases.length; i++) {
             Integer[] aCase = intCases[i];
             String exp = intResults[i];
@@ -61,7 +62,7 @@ public class TestSort {
 
     @Test
     public void testSelectionSortOnStrings() {
-        SelectionSort sort = new SelectionSort();
+        Sort<String> sort = new SelectionSort<String>();
         for (int i = 0; i < stringCases.length; i++) {
             String[] aCase = stringCases[i];
             String exp = stringResults[i];
